@@ -12,6 +12,6 @@ import {GetSellerByEmail} from "./GetSellerByEmail.js";
  */
 export default function createServices(providers) {
     return {
-      getSellerByEmail: new GetSellerByEmail(providers),
+      getSellerByEmail: new GetSellerByEmail(providers.DynamoManager, providers.CognitoManager, providers.JwtDecoder),
     };
 }
