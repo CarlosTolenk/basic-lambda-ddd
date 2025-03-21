@@ -1,0 +1,10 @@
+.env
+coverage
+# OSX
+#
+.DS_Store
+
+
+# node.js
+node_modules/
+package-lock.json
