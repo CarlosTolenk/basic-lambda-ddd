@@ -1,12 +1,11 @@
-# mk-changeSellerRouteId
+# mk-sendToOrderToClient
+
+Ejemplo de arquitectura con principios en DDD
 
 ## Setear env para layer y nombres de tablas
 crear un .env en la raiz de la lambda, con las variables detalladae en env.template
 ```js
 LAYERS_BASE_PATH=../../../layer/node-tecnico
-SELLER_TABLE_NAME=mi-market-sellers2
-ROUTE_TABLE_NAME=mi-market-routes2
-ROUTE_HISTORY_TABLE_NAME=mi-market-route-history2
 ```
 
 ## Request for debug
