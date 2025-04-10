@@ -1,4 +1,5 @@
 import {EventLambda} from "../domain/EventLambda.js";
+import {ResponseLambda} from "../domain/Response.js";
 
 /**
  * @param {ServiceLocator} serviceLocator - Instancia del ServiceLocator con los servicios inyectados
@@ -19,14 +20,10 @@ export default function createLambdaHandler(serviceLocator) {
                 const seller = await serviceLocator.getSellerByEmail(eventLambda);
                 console.log('seller', seller);
 
-
-                return seller;
+                return new ResponseLambda(seller, 200)
             } catch (error) {
                 console.error('Error en la Lambda:', error);
-                return {
-                    statusCode: 500,
-                    body: JSON.stringify({ error: error.message }),
-                };
+                return new ResponseLambda(null, 500, JSON.stringify({ error: error.message }))
             }
         },
     };

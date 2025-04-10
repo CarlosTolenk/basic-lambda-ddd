@@ -4,8 +4,8 @@ import createServices from '../application/services/index.js';
 /**
  * @typedef {import('../infrastructure/providers').Providers} Providers
  * @typedef {import('../application/services/index.js').Services} Services
+ * @typedef {GetSellerByEmail} getSellerByEmail
  * @typedef {Object} ServiceLocatorMethods
- * @property {Function} getSellerByEmail
  */
 
 /**
@@ -18,6 +18,9 @@ export class ServiceLocator {
 
     /** @type {Services} */
     services;
+
+    /** @type {Function} */
+    getSellerByEmail;
 
     constructor() {
         this.providers = providers;
