@@ -7,7 +7,7 @@ import { join } from 'path';
  * @property {JwtDecoder} JwtDecoder
  */
 
-const basePath = process.env.LAYERS_BASE_PATH;
+const basePath = process.env.LAYERS_BASE_PATH || process.cwd();
 
 /** @type {Providers} */
 const providers = {
