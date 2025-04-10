@@ -1,6 +1,6 @@
 import { jest, describe, test, beforeEach, expect } from '@jest/globals';
 
-jest.unstable_mockModule('../../infrastructure/providers/index.js', () => ({
+jest.unstable_mockModule('../../src/infrastructure/providers/index.js', () => ({
     __esModule: true,
     default: {
         providerA: { name: 'ProviderA' },
@@ -8,7 +8,7 @@ jest.unstable_mockModule('../../infrastructure/providers/index.js', () => ({
     },
 }));
 
-jest.unstable_mockModule('../../application/services/index.js', () => ({
+jest.unstable_mockModule('../../src/application/services/index.js', () => ({
     __esModule: true,
     default: jest.fn()
 }));
