@@ -51,7 +51,7 @@ export class HeaderLambda {
      * Devolver un boolean si el país es CL.
      * @returns {boolean}
      */
-    isCountryCL() {
-        return this.countryId === COUNTRY_CL;
-    }
+    // isCountryCL() {
+    //     return this.countryId === COUNTRY_CL;
+    // }
 }
