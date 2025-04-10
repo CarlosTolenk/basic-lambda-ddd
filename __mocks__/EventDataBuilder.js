@@ -24,7 +24,7 @@
  * @property {string} paymentMethod - Método de pago
  */
 
-import {HeaderLambda} from "../domain/HeaderLambda.js";
+import {HeaderLambda} from "../src/domain/HeaderLambda.js";
 
 /**
  * Clase Builder para construir objetos de tipo {@link EventData}.

@@ -2,7 +2,7 @@ import providers from './providers/index.js';
 import createServices from '../application/services/index.js';
 
 /**
- * @typedef {import('../infrastructure/providers').Providers} Providers
+ * @typedef {import('./providers/index.js').Providers} Providers
  * @typedef {import('../application/services/index.js').Services} Services
  * @typedef {GetSellerByEmail} getSellerByEmail
  * @typedef {Object} ServiceLocatorMethods

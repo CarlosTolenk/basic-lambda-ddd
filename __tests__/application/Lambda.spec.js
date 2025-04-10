@@ -1,11 +1,11 @@
 import {describe, test, expect, beforeEach, jest} from '@jest/globals';
 
-import createLambdaHandler from '../../application/Lambda.js';
-import {EventLambda} from '../../domain/EventLambda.js';
-import {ResponseLambda} from '../../domain/Response.js';
+import createLambdaHandler from '../../src/application/Lambda.js';
+import {EventLambda} from '../../src/domain/EventLambda.js';
+import {ResponseLambda} from '../../src/domain/Response.js';
 import {EventDataBuilder} from "../../__mocks__/EventDataBuilder.js";
 import {SellerDataBuilder} from "../../__mocks__/SellerDataBuilder.js";
-import {HeaderLambda} from "../../domain/HeaderLambda.js";
+import {HeaderLambda} from "../../src/domain/HeaderLambda.js";
 
 describe('createLambdaHandler', () => {
     let serviceLocatorMock;

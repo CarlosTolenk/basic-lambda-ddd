@@ -13,9 +13,9 @@ jest.unstable_mockModule('../../application/services/index.js', () => ({
     default: jest.fn()
 }));
 
-const { ServiceLocator } = await import('../../infrastructure/ServiceLocator.js');
-const providers = (await import('../../infrastructure/providers/index.js')).default;
-const createServices = (await import('../../application/services/index.js')).default;
+const { ServiceLocator } = await import('../../src/infrastructure/ServiceLocator.js');
+const providers = (await import('../../src/infrastructure/providers/index.js')).default;
+const createServices = (await import('../../src/application/services/index.js')).default;
 
 describe('ServiceLocator', () => {
     beforeEach(() => {
