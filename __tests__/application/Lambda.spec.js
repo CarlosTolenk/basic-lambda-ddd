@@ -14,12 +14,10 @@ describe('createLambdaHandler', () => {
             getSellerByEmail: jest.fn()
         };
 
-        // Obtenemos la instancia de nuestro handler a partir del mock.
         handler = createLambdaHandler(serviceLocatorMock);
     });
 
     test('debe retornar una respuesta 200 con los datos del seller', async () => {
-        // Preparamos datos de prueba
         const eventData = new EventDataBuilder()
             .withHeaders({
                 Authorization: 'token123',
@@ -41,27 +39,18 @@ describe('createLambdaHandler', () => {
             .withPaymentMethod('CREDIT')
             .build();
         const mockSeller = { name: 'Test Seller', email: 'test@example.com' };
-
-        // Configuramos el mock para que devuelva un seller.
         serviceLocatorMock.getSellerByEmail.mockResolvedValue(mockSeller);
 
-        // Ejecutamos el método handleRequest.
         const response = await handler.handleRequest(eventData);
 
-        // Aseguramos que getSellerByEmail haya sido llamado con una instancia de EventLambda
         expect(serviceLocatorMock.getSellerByEmail).toHaveBeenCalledWith(expect.any(EventLambda));
-
-        // Verificamos que el handler retorne una instancia de ResponseLambda
         expect(response).toBeInstanceOf(ResponseLambda);
-
-        // Validamos que la respuesta es la esperada
-        // expect(response.data).toEqual(mockSeller);
+        expect(response.data).toEqual(mockSeller);
         expect(response.statusCode).toBe(200);
-        // expect(response.headers).toBeUndefined(); // Por defecto, en este caso no se están seteando headers.
+        expect(response.error).toEqual(null);
     });
 
     test('debe manejar errores y retornar código 500', async () => {
-        // Preparamos datos de prueba
         const eventData = new EventDataBuilder()
             .withHeaders({
                 Authorization: 'token123',
@@ -83,22 +72,14 @@ describe('createLambdaHandler', () => {
             .withPaymentMethod('CREDIT')
             .build();
         const errorMessage = 'Error en getSellerByEmail';
-
-        // Configuramos el mock para que lance un error.
         serviceLocatorMock.getSellerByEmail.mockRejectedValue(new Error(errorMessage));
 
-        // Ejecutamos el método handleRequest.
         const response = await handler.handleRequest(eventData);
 
-        // Aseguramos que se haya invocado getSellerByEmail
-        // expect(serviceLocatorMock.getSellerByEmail).toHaveBeenCalledWith(expect.any(EventLambda));
-
-        // Verificamos que el handler retorne una instancia de ResponseLambda
+        expect(serviceLocatorMock.getSellerByEmail).toHaveBeenCalledWith(expect.any(EventLambda));
         expect(response).toBeInstanceOf(ResponseLambda);
-
-        // Validamos el contenido de la respuesta de error
         expect(response.statusCode).toBe(500);
-        // expect(response.body).toBeNull();
-        // expect(response.headers).toEqual(JSON.stringify({ error: errorMessage }));
+        expect(response.data).toBeNull();
+        expect(response.error).toEqual(JSON.stringify({ error: errorMessage }));
     });
 });
