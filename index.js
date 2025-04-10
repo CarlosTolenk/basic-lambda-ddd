@@ -1,5 +1,5 @@
-import { ServiceLocator } from './infrastructure/ServiceLocator.js';
-import createLambdaHandler from './application/Lambda.js';
+import { ServiceLocator } from './src/infrastructure/ServiceLocator.js';
+import createLambdaHandler from './src/application/Lambda.js';
 
 /** @type {ServiceLocator} */
 const serviceLocator = new ServiceLocator();
