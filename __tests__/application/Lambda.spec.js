@@ -17,7 +17,7 @@ describe('createLambdaHandler', () => {
         handler = createLambdaHandler(serviceLocatorMock);
     });
 
-    test('debe retornar una respuesta 200 con los datos del seller', async () => {
+    test('should return a 200 response with the sellers data', async () => {
         const eventData = new EventDataBuilder()
             .withHeaders({
                 Authorization: 'token123',
@@ -50,7 +50,7 @@ describe('createLambdaHandler', () => {
         expect(response.error).toEqual(null);
     });
 
-    test('debe manejar errores y retornar código 500', async () => {
+    test('should handle errors and return 500 code', async () => {
         const eventData = new EventDataBuilder()
             .withHeaders({
                 Authorization: 'token123',
