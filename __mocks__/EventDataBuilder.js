@@ -24,6 +24,8 @@
  * @property {string} paymentMethod - Método de pago
  */
 
+import {HeaderLambda} from "../domain/HeaderLambda.js";
+
 /**
  * Clase Builder para construir objetos de tipo {@link EventData}.
  */
@@ -33,18 +35,7 @@ export class EventDataBuilder {
          * @private
          * @type {HeaderData}
          */
-        this._headers = {
-            Authorization: '',
-            b2bSession: {},
-            cpgId: '',
-            countryId: '',
-            organizationId: '',
-            transactionId: '',
-            appID: '',
-            appVersion: '',
-            appOs: '',
-            appOsVersion: '',
-        };
+        this._headers;
 
         /**
          * @private
@@ -89,7 +80,7 @@ export class EventDataBuilder {
      * @returns {EventDataBuilder}
      */
     withHeaders(headers) {
-        this._headers = headers;
+        this._headers = new HeaderLambda(headers);
         return this;
     }
 

@@ -1,6 +1,7 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals';
 import { GetSellerByEmail } from '../../../application/services/GetSellerByEmail.js';
 import { Seller } from '../../../domain/Seller.js';
+import {EventDataBuilder} from "../../../__mocks__/EventDataBuilder.js";
 
 describe('GetSellerByEmail', () => {
     let dynamoManagerMock;
@@ -31,12 +32,26 @@ describe('GetSellerByEmail', () => {
     });
 
     test('should return a Seller object when the seller exists in DynamoDB', async () => {
-        const eventData = {
-            headers: {
-                authorization: 'some-token',
-                getIndexTable: jest.fn().mockReturnValue('testTable')
-            }
-        };
+        const eventData = new EventDataBuilder()
+            .withHeaders({
+                Authorization: 'token123',
+                b2bSession: { Authorization: 'b2bToken456' },
+                cpgId: 'CPG-001',
+                countryId: 'CL',
+                organizationId: '0043',
+                transactionId: 'TXN-789',
+                appID: 'myApp',
+                appVersion: '1.0.0',
+                appOs: 'iOS',
+                appOsVersion: '14.4',
+            })
+            .withClientId('client-123')
+            .withLongitude(-74.08175)
+            .withLatitude(4.60971)
+            .withDeliveryDate('2025-12-31')
+            .withDeliveryFrozenDate('2025-12-31')
+            .withPaymentMethod('CREDIT')
+            .build();
 
         cognitoManagerMock.mockImplementation(() => {
             return {
@@ -55,9 +70,9 @@ describe('GetSellerByEmail', () => {
 
         const seller = await getSellerByEmail.execute(eventData);
 
-        expect(cognitoManagerMock).toHaveBeenCalledWith('some-token');
-        expect(jwtDecoderMock.getUserInfoNoVerification).toHaveBeenCalledWith('some-token');
-        expect(dynamoManagerMock.getItem).toHaveBeenCalledWith('testTable-sellers', { email: 'email@example.com' });
+        expect(cognitoManagerMock).toHaveBeenCalledWith('token123');
+        expect(jwtDecoderMock.getUserInfoNoVerification).toHaveBeenCalledWith('token123');
+        expect(dynamoManagerMock.getItem).toHaveBeenCalledWith('mk-CPG-001-CL-0043-sellers', { email: 'email@example.com' });
         expect(seller).toBeInstanceOf(Seller);
         expect(seller.username).toBe('testUser');
     });
