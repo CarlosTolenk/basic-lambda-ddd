@@ -4,6 +4,7 @@ import createLambdaHandler from '../../application/Lambda.js';
 import { EventLambda } from '../../domain/EventLambda.js';
 import { ResponseLambda } from '../../domain/Response.js';
 import {EventDataBuilder} from "../../__mocks__/EventDataBuilder.js";
+import {SellerDataBuilder} from "../../__mocks__/SellerDataBuilder.js";
 
 describe('createLambdaHandler', () => {
     let serviceLocatorMock;
@@ -38,7 +39,7 @@ describe('createLambdaHandler', () => {
             .withDeliveryFrozenDate('2025-12-31')
             .withPaymentMethod('CREDIT')
             .build();
-        const mockSeller = { name: 'Test Seller', email: 'test@example.com' };
+        const mockSeller =  new SellerDataBuilder().build();
         serviceLocatorMock.getSellerByEmail.mockResolvedValue(mockSeller);
 
         const response = await handler.handleRequest(eventData);
