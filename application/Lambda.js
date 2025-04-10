@@ -16,7 +16,7 @@ export default function createLambdaHandler(serviceLocator) {
 
             try {
                 const eventLambda = new EventLambda(eventData);
-                const seller = await serviceLocator.getService('getSellerByEmail').execute(eventLambda);
+                const seller = await serviceLocator.getSellerByEmail(eventLambda);
                 console.log('seller', seller);
 
 

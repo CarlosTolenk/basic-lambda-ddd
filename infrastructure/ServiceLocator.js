@@ -1,12 +1,18 @@
-import providers from "./providers/index.js";
-import createServices from "../application/services/index.js";
+import providers from './providers/index.js';
+import createServices from '../application/services/index.js';
 
 /**
  * @typedef {import('../infrastructure/providers').Providers} Providers
  * @typedef {import('../application/services/index.js').Services} Services
+ * @typedef {Object} ServiceLocatorMethods
+ * @property {Function} getSellerByEmail
+ */
+
+/**
+ * @class
+ * @implements {ServiceLocatorMethods}
  */
 export class ServiceLocator {
-
     /** @type {Providers} */
     providers;
 
@@ -16,6 +22,14 @@ export class ServiceLocator {
     constructor() {
         this.providers = providers;
         this.services = createServices(this.providers);
+
+        this._assignServices();
+    }
+
+    _assignServices() {
+        for (const [serviceName, serviceInstance] of Object.entries(this.services)) {
+            this[serviceName] = (...args) => serviceInstance.execute(...args);
+        }
     }
 
     /**
@@ -24,15 +38,6 @@ export class ServiceLocator {
      * @returns {Providers[keyof Providers]}
      */
     async getProvider(provider) {
-        return await this.providers[provider];
-    }
-
-    /**
-     * Obtiene una instancia de un caso de uso.
-     * @param {keyof Services} serviceName - Nombre del servicio
-     * @returns {Services[keyof Services]}
-     */
-    getService(serviceName) {
-        return this.services[serviceName];
+        return this.providers[provider];
     }
 }
