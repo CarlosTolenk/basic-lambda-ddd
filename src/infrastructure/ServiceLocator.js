@@ -4,14 +4,15 @@ import createServices from '../application/services/index.js';
 /**
  * @typedef {import('./providers/index.js').Providers} Providers
  * @typedef {import('../application/services/index.js').Services} Services
- * @typedef {GetSellerByEmail} getSellerByEmail
- * @typedef {Object} ServiceLocatorMethods
+ * @typedef {import('../domain/EventLambda.js').EventLambda} EventLambda
+ * @typedef {import('../domain/entities/Seller.js').Seller} Seller
  */
 
 /**
- * @class
- * @implements {ServiceLocatorMethods}
+ * @typedef {Object} ServiceLocator
+ * @property {(event: EventLambda) => Promise<Seller>} getSellerByEmail
  */
+
 export class ServiceLocator {
     /** @type {Providers} */
     providers;
@@ -19,26 +20,21 @@ export class ServiceLocator {
     /** @type {Services} */
     services;
 
-    /** @type {Function} */
+    /** @type {(event: EventLambda) => Promise<Seller>} */
     getSellerByEmail;
 
     constructor() {
         this.providers = providers;
         this.services = createServices(this.providers);
 
-        this._assignServices();
-    }
-
-    _assignServices() {
-        for (const [serviceName, serviceInstance] of Object.entries(this.services)) {
-            this[serviceName] = (...args) => serviceInstance.execute(...args);
-        }
+        this.getSellerByEmail = (event) =>
+            this.services.getSellerByEmail.execute(event);
     }
 
     /**
-     * Obtiene una instancia de un provider.
-     * @param {keyof Providers} provider - Nombre del provider.
-     * @returns {Providers[keyof Providers]}
+     * @template {keyof Providers} K
+     * @param {K} provider - Nombre del provider.
+     * @returns {Providers[K]}
      */
     async getProvider(provider) {
         return this.providers[provider];

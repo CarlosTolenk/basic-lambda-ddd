@@ -50,9 +50,9 @@ describe('ServiceLocator', () => {
 
         expect(typeof serviceLocator.getSellerByEmail).toBe('function');
 
-        serviceLocator.getSellerByEmail('arg1', 'arg2');
+        serviceLocator.getSellerByEmail('arg1');
 
-        expect(serviceLocator.services.getSellerByEmail.execute).toHaveBeenCalledWith('arg1', 'arg2');
+        expect(serviceLocator.services.getSellerByEmail.execute).toHaveBeenCalledWith('arg1');
     });
 
     test('should getProvider return the correct provider', async () => {
