@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeEach, jest } from '@jest/globals';
 import { GetSellerByEmail } from '../../../src/application/services/GetSellerByEmail.js';
 import { Seller } from '../../../src/domain/Seller.js';
-import {EventDataBuilder} from "../../../__mocks__/EventDataBuilder.js";
+import {EventDataBuilder} from "../../__mocks__/EventDataBuilder.js";
 
 describe('GetSellerByEmail', () => {
     let dynamoManagerMock;
