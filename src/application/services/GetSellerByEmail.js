@@ -1,4 +1,5 @@
 import {Seller} from "../../domain/Seller.js";
+import {EventLambda} from "../../domain/EventLambda.js";
 
 export class GetSellerByEmail {
 
