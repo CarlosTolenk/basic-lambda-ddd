@@ -9,10 +9,14 @@ import createServices from '../application/services/index.js';
  */
 
 /**
- * @typedef {Object} ServiceLocator
+ * Tipado completo de métodos públicos del ServiceLocator
+ * @typedef {Object} ServiceLocatorInterface
  * @property {(event: EventLambda) => Promise<Seller>} getSellerByEmail
  */
 
+/**
+ * @implements {ServiceLocatorInterface}
+ */
 export class ServiceLocator {
     /** @type {Providers} */
     providers;
@@ -27,13 +31,29 @@ export class ServiceLocator {
         this.providers = providers;
         this.services = createServices(this.providers);
 
-        this.getSellerByEmail = (event) =>
-            this.services.getSellerByEmail.execute(event);
+        this._bindServices([
+            'getSellerByEmail',
+        ]);
     }
 
     /**
+     * Asigna los métodos definidos desde services a this con `execute`.
+     * @param {Array<keyof ServiceLocatorInterface>} serviceKeys
+     */
+    _bindServices(serviceKeys) {
+        for (const key of serviceKeys) {
+            const service = this.services[key];
+            if (!service || typeof service.execute !== 'function') {
+                throw new Error(`Service '${key}' not found or missing .execute`);
+            }
+            this[key] = (...args) => service.execute(...args);
+        }
+    }
+
+    /**
+     * Obtener un provider con tipado estático.
      * @template {keyof Providers} K
-     * @param {K} provider - Nombre del provider.
+     * @param {K} provider
      * @returns {Providers[K]}
      */
     async getProvider(provider) {

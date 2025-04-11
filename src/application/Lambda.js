@@ -2,7 +2,7 @@ import {EventLambda} from "../domain/EventLambda.js";
 import {ResponseLambda} from "../domain/Response.js";
 
 /**
- * @param {ServiceLocator} serviceLocator - Instancia del ServiceLocator con los servicios inyectados
+ * @param {import('./infrastructure/ServiceLocator.js').ServiceLocator} serviceLocator
  * @returns {{ handleRequest: Function }} - Retorna el handler de la Lambda
  */
 export default function createLambdaHandler(serviceLocator) {
